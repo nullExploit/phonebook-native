@@ -13,7 +13,7 @@ export default function PhoneBookBox() {
   const dispatch: any = useDispatch();
   const [sort, setSort] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
 
   const phonebooks: PhoneBook[] = useSelector(selectPhoneBook);
   const totalData: number = useSelector(total);
@@ -32,15 +32,15 @@ export default function PhoneBookBox() {
     if (
       Math.ceil(layoutMeasurement.height + contentOffset.y) >=
         contentSize.height &&
-      limit < totalData
+      page < totalData
     ) {
-      setLimit((prev) => prev + 10);
+      setPage((prev) => prev + 1);
     }
   };
 
   useEffect(() => {
-    dispatch(loadPhoneBookAsync({ sort, keyword, limit }));
-  }, [dispatch, sort, keyword, limit]);
+    dispatch(loadPhoneBookAsync({ sort, keyword, page }));
+  }, [dispatch, sort, keyword, page]);
 
   const nodeList = phonebooks.map((item: any) => (
     <PhoneBookItem
@@ -63,6 +63,7 @@ export default function PhoneBookBox() {
         keyword={keyword}
         setSort={setSort}
         sort={sort}
+        setPage={setPage}
       />
       <ScrollView
         style={{ backgroundColor: "#fff" }}

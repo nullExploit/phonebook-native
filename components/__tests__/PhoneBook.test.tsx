@@ -66,6 +66,7 @@ describe("Should render all phonebooks correctly", () => {
   it("Should render phonebook search", () => {
     const setKeyword = jest.fn();
     const setSort = jest.fn();
+    const setPage = jest.fn()
     const tree = render(
       <Providers>
         <PhoneBookSearch
@@ -73,6 +74,7 @@ describe("Should render all phonebooks correctly", () => {
           setSort={setSort}
           keyword=""
           sort={false}
+          setPage={setPage}
         />
       </Providers>
     ).toJSON();

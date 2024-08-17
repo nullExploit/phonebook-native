@@ -13,11 +13,13 @@ export default function PhoneBookSearch({
   keyword,
   setSort,
   sort,
+  setPage,
 }: {
   setKeyword: any;
   keyword: string;
   setSort: any;
   sort: boolean;
+  setPage: any;
 }) {
   return (
     <View style={styles.container}>
@@ -25,7 +27,10 @@ export default function PhoneBookSearch({
         accessibilityLabel="sort"
         underlayColor="#987303"
         style={styles.button}
-        onPress={() => setSort((prev: boolean) => !prev)}
+        onPress={() => {
+          setPage(1)
+          setSort((prev: boolean) => !prev);
+        }}
       >
         <FontAwesomeIcon
           icon={sort ? faArrowUpAZ : faArrowUpZA}
@@ -36,7 +41,10 @@ export default function PhoneBookSearch({
         accessibilityLabel="search"
         style={styles.input}
         autoCapitalize="none"
-        onChangeText={(val) => setKeyword(val)}
+        onChangeText={(val) => {
+          setPage(1);
+          setKeyword(val);
+        }}
         defaultValue={keyword}
       />
       <FontAwesomeIcon

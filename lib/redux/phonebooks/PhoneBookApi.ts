@@ -1,11 +1,12 @@
 import { api } from "@/lib/api";
 
-export const load = (sort: boolean, keyword: string, limit: any) =>
+export const load = (sort: boolean, keyword: string, limit: any, page: number) =>
   api.get("api/phonebooks", {
     params: {
       sort: sort ? (sort === true ? "desc" : "asc") : "asc",
       keyword,
       limit,
+      page
     },
   });
 

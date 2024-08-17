@@ -19,17 +19,17 @@ export const loadPhoneBookAsync = createAsyncThunk(
   async ({
     sort,
     keyword,
-    limit,
+    page,
   }: {
     sort: boolean;
     keyword: string;
-    limit: number;
+    page: number;
   }) => {
-    const response = await load(sort, keyword, limit);
-    const total = await load(sort, keyword, null);
+    const response = await load(sort, keyword, 10, page);
     return {
       data: response.data.phonebooks,
-      total: total.data.phonebooks.length,
+      total: response.data.pages,
+      page,
     };
   }
 );
@@ -99,7 +99,8 @@ export const phoneBookSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loadPhoneBookAsync.fulfilled, (state, action) => {
-        state.value = action.payload.data;
+        if (action.payload.page === 1) state.value = action.payload.data;
+        else if (action.payload.page !== 1) state.value = state.value.concat(action.payload.data)
         state.total = action.payload.total;
       })
       .addCase(loadPhoneBookAsync.rejected, (state) => {
